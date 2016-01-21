@@ -39,7 +39,7 @@
  * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
  * behave as closely as possible to ECMAScript 6 (Harmony).
  *
- * @version 1.0.1
+ * @version 1.0.2
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -51,25 +51,25 @@
 /*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
   freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
   nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:5, maxdepth:2,
-  maxstatements:13, maxcomplexity:6 */
+  es3:true, esnext:false, plusplus:true, maxparams:5, maxdepth:1,
+  maxstatements:15, maxcomplexity:5 */
 
 /*global module */
 
 ;(function () {
   'use strict';
 
-  var ES = require('es-abstract/es6'),
-    defProps = require('define-properties'),
-    isPrimitive = require('is-primitive'),
-    isArrayLike = require('is-array-like-x'),
-    pSome = Array.prototype.some,
-    pIndexOf = Array.prototype.indexOf,
-    pPush = Array.prototype.push,
-    pPop = Array.prototype.pop,
-    SKIP = 'skip',
-    BREAK = 'break',
-    STOP = 'stop';
+  var defProps = require('define-properties-x').defineProperties;
+  var isFunction = require('is-function-x');
+  var isPrimitive = require('is-primitive');
+  var isArrayLike = require('is-array-like-x');
+  var pSome = Array.prototype.some;
+  var pIndexOf = Array.prototype.indexOf;
+  var pPush = Array.prototype.push;
+  var pPop = Array.prototype.pop;
+  var SKIP = 'skip';
+  var BREAK = 'break';
+  var STOP = 'stop';
 
   /**
    * This method walks a given object and invokes a function on each
@@ -84,59 +84,57 @@
    * @param {!Object} stack The `stack` for tracking circularity.
    */
   function internalWalk(object, props, predicate, thisArg, stack) {
-    var length, control, keys;
     if (isPrimitive(object)) {
       return;
     }
-    length = stack.length;
-    keys = props(object, length);
+    var length = stack.length;
+    var keys = props(object, length);
     if (!isArrayLike(keys)) {
       keys = [];
     }
-    ES.Call(pSome, keys, [function (prop) {
-      var value = object[prop],
-        valArg;
-      control = ES.Call(predicate, thisArg, [value, prop, object, length]);
+    var control;
+    pSome.call(keys, function (prop) {
+      var value = object[prop];
+      control = predicate.call(thisArg, value, prop, object, length);
       if (control === BREAK || control === STOP) {
         return true;
       }
       if (control === SKIP) {
         return false;
       }
-      valArg = [value];
-      if (ES.Call(pIndexOf, stack, valArg) > -1) {
+      if (pIndexOf.call(stack, value) > -1) {
         throw new RangeError('Circular object');
       }
-      ES.Call(pPush, stack, valArg);
+      pPush.call(stack, value);
       control = internalWalk(value, props, predicate, thisArg, stack);
-      ES.Call(pPop, stack);
+      pPop.call(stack);
       return control === STOP;
-    }]);
+    });
     return control;
   }
 
   /**
    * This method walks a given object and invokes a function on each iteration.
    *
+   * @private
    * @param {*} object The `object` to walk.
    * @param {Function} props The function that returns an array of the
    *  properties of `value` to be walked, invoked per iteration.
    * @param {Function} predicate The function invoked per iteration.
    * @param {*} thisArg The `this` binding of `predicate`.
    */
-  module.exports = function objectWalk(object, props, predicate, thisArg) {
-    if (isPrimitive(object) || !ES.IsCallable(predicate)) {
+  function objectWalk(object, props, predicate, thisArg) {
+    if (isPrimitive(object) || !isFunction(predicate)) {
       return;
     }
     internalWalk(
       object,
-      ES.IsCallable(props) ? props : Object.keys,
+      isFunction(props) ? props : Object.keys,
       predicate,
       thisArg, [object]
     );
-  };
-
-  defProps(module.exports, {
+  }
+  defProps(objectWalk, {
     /**
      * @static
      * @type string
@@ -156,4 +154,16 @@
      */
     STOP: STOP
   });
+
+  /**
+   * This method walks a given object and invokes a function on each iteration.
+   *
+   * @function
+   * @param {*} object The `object` to walk.
+   * @param {Function} props The function that returns an array of the
+   *  properties of `value` to be walked, invoked per iteration.
+   * @param {Function} predicate The function invoked per iteration.
+   * @param {*} thisArg The `this` binding of `predicate`.
+   */
+  module.exports = objectWalk;
 }());
