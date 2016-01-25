@@ -39,7 +39,7 @@
  * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
  * behave as closely as possible to ECMAScript 6 (Harmony).
  *
- * @version 1.0.4
+ * @version 1.0.5
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -59,7 +59,7 @@
 ;(function () {
   'use strict';
 
-  var defProps = require('define-properties-x').defineProperties;
+  var define = require('define-properties-x');
   var isFunction = require('is-function-x');
   var isPrimitive = require('is-primitive');
   var isArrayLike = require('is-array-like-x');
@@ -134,7 +134,7 @@
       thisArg, [object]
     );
   }
-  defProps(objectWalk, {
+  define.properties(objectWalk, {
     /**
      * @static
      * @type string
