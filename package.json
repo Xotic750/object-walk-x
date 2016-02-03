@@ -1,6 +1,6 @@
 {
   "name": "object-walk-x",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "objectWalk module.",
   "homepage": "https://github.com/Xotic750/object-walk-x",
   "author": {
@@ -28,13 +28,13 @@
     "url": "https://github.com/Xotic750/object-walk-x/issues"
   },
   "dependencies": {
-    "is-function-x": "^1.0.3",
-    "define-properties-x": "^1.1.1",
+    "is-function-x": "^1.0.4",
+    "define-properties-x": "^1.1.2",
     "is-primitive": "^2.0.0",
-    "is-array-like-x": "^1.0.10"
+    "is-array-like-x": "^1.0.11"
   },
   "devDependencies": {
-    "es5-shim": "^4.5.0",
+    "es5-shim": "^4.5.2",
     "es6-shim": "^0.34.2",
     "json3": "^3.3.2",
     "jscs": "^2.9.0",
