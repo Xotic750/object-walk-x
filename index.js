@@ -39,24 +39,27 @@
  * `es6.shim.js` provides compatibility shims so that legacy JavaScript engines
  * behave as closely as possible to ECMAScript 6 (Harmony).
  *
- * @version 1.0.8
+ * @version 1.1.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
  * @module object-walk-x
  */
 
-/*jslint maxlen:80, es6:false, white:true */
+/* jslint maxlen:80, es6:true, white:true */
 
-/*jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
-  freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
-  nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
-  es3:true, esnext:false, plusplus:true, maxparams:5, maxdepth:1,
-  maxstatements:15, maxcomplexity:5 */
+/* jshint bitwise:true, camelcase:true, curly:true, eqeqeq:true, forin:true,
+   freeze:true, futurehostile:true, latedef:true, newcap:true, nocomma:true,
+   nonbsp:true, singleGroups:true, strict:true, undef:true, unused:true,
+   es3:false, esnext:true, plusplus:true, maxparams:1, maxdepth:1,
+   maxstatements:3, maxcomplexity:2 */
 
-/*global module */
+/* eslint strict: 1, max-statements: 1 */
 
-;(function () {
+/* global module */
+
+;(function () { // eslint-disable-line no-extra-semi
+
   'use strict';
 
   var define = require('define-properties-x');
@@ -83,9 +86,9 @@
    * @param {*} thisArg The `this` binding of `predicate`.
    * @param {!Object} stack The `stack` for tracking circularity.
    */
-  function internalWalk(object, props, predicate, thisArg, stack) {
+  var internalWalk = function (object, props, predicate, thisArg, stack) {
     if (isPrimitive(object)) {
-      return;
+      return void 0;
     }
     var length = stack.length;
     var keys = props(object, length);
@@ -111,7 +114,7 @@
       return control === STOP;
     });
     return control;
-  }
+  };
 
   /**
    * This method walks a given object and invokes a function on each iteration.
@@ -123,30 +126,25 @@
    * @param {Function} predicate The function invoked per iteration.
    * @param {*} thisArg The `this` binding of `predicate`.
    */
-  function objectWalk(object, props, predicate, thisArg) {
+  var objectWalk = function (object, props, predicate, thisArg) {
     if (isPrimitive(object) || !isFunction(predicate)) {
       return;
     }
-    internalWalk(
-      object,
-      isFunction(props) ? props : Object.keys,
-      predicate,
-      thisArg, [object]
-    );
-  }
+    internalWalk(object, isFunction(props) ? props : Object.keys, predicate, thisArg, [object]);
+  };
   define.properties(objectWalk, {
-    /**
-     * @static
-     * @type string
-     * @default skip
-     */
-    SKIP: SKIP,
     /**
      * @static
      * @type string
      * @default break
      */
     BREAK: BREAK,
+    /**
+     * @static
+     * @type string
+     * @default skip
+     */
+    SKIP: SKIP,
     /**
      * @static
      * @type string
