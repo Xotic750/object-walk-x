@@ -22,6 +22,8 @@
  *
  * Like DOM walk but for objects.
  *
+ * Requires ES3 or above.
+ *
  * @version 1.1.1
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
