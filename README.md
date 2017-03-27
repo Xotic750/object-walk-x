@@ -23,6 +23,8 @@ alt="npm version" height="18">
 
 Like DOM walk but for objects.
 
+Requires ES3 or above.
+
 **Version**: 1.1.1  
 **Author**: Xotic750 <Xotic750@gmail.com>  
 **License**: [MIT](&lt;https://opensource.org/licenses/MIT&gt;)  
