@@ -1,6 +1,6 @@
 /**
  * @file Walks a given object and invokes a function on each iteration.
- * @version 1.3.0
+ * @version 1.5.0
  * @author Xotic750 <Xotic750@gmail.com>
  * @copyright  Xotic750
  * @license {@link <https://opensource.org/licenses/MIT> MIT}
@@ -14,7 +14,7 @@ var isFunction = require('is-function-x');
 var isPrimitive = require('is-primitive');
 var isArrayLike = require('is-array-like-x');
 var includes = require('array-includes');
-var some = require('array.prototype.some');
+var some = require('array-some-x');
 var SKIP = 'skip';
 var BREAK = 'break';
 var STOP = 'stop';
