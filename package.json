@@ -1,6 +1,6 @@
 {
   "name": "object-walk-x",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Walks a given object and invokes a function on each iteration.",
   "homepage": "https://github.com/Xotic750/object-walk-x",
   "author": {
@@ -34,8 +34,8 @@
     "is-array-like-x": "^1.7.0",
     "is-function-x": "^3.1.1",
     "is-primitive": "^2.0.0",
-    "object-define-properties-x": "^4.1.0",
-    "object-keys-x": "^2.4.0"
+    "object-define-properties-x": "^4.2.0",
+    "object-keys-x": "^2.5.0"
   },
   "devDependencies": {
     "@xotic750/eslint-config-standard-x": "^2.2.1",

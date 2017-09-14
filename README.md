@@ -23,7 +23,7 @@
 ## object-walk-x
 Walks a given object and invokes a function on each iteration.
 
-**Version**: 1.6.0  
+**Version**: 1.7.0  
 **Author**: Xotic750 <Xotic750@gmail.com>  
 **License**: [MIT](&lt;https://opensource.org/licenses/MIT&gt;)  
 **Copyright**: Xotic750  
