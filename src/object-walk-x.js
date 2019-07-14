@@ -7,19 +7,18 @@
  * @module object-walk-x
  */
 
-'use strict';
+const defineProperties = require('object-define-properties-x');
+const isFunction = require('is-function-x');
+const isPrimitive = require('is-primitive');
+const isArrayLike = require('is-array-like-x');
+const includes = require('array-includes-x');
+const some = require('array-some-x');
+const objectKeys = require('object-keys-x');
 
-var defineProperties = require('object-define-properties-x');
-var isFunction = require('is-function-x');
-var isPrimitive = require('is-primitive');
-var isArrayLike = require('is-array-like-x');
-var includes = require('array-includes-x');
-var some = require('array-some-x');
-var objectKeys = require('object-keys-x');
-var aPop = Array.prototype.pop;
-var SKIP = 'skip';
-var BREAK = 'break';
-var STOP = 'stop';
+const aPop = Array.prototype.pop;
+const SKIP = 'skip';
+const BREAK = 'break';
+const STOP = 'stop';
 
 /**
  * This method walks a given object and invokes a function on each
@@ -31,7 +30,7 @@ var STOP = 'stop';
  *  properties of `value` to be walked, invoked per iteration.
  * @param {Function} supplier - The function invoked per `depth`.
  * @param {*} thisArg - The `this` binding of `supplier`.
- * @param {!Object} stack - The `stack` for tracking circularity.
+ * @param {!object} stack - The `stack` for tracking circularity.
  */
 // eslint-disable-next-line max-params
 var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
@@ -39,16 +38,18 @@ var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
     return void 0;
   }
 
-  var length = stack.length;
-  var keys = props(object, length);
+  const {length} = stack;
+  let keys = props(object, length);
+
   if (isArrayLike(keys) === false) {
     keys = [];
   }
 
-  var control;
+  let control;
   some(keys, function _some(prop) {
-    var value = object[prop];
+    const value = object[prop];
     control = supplier.call(thisArg, value, prop, object, length);
+
     if (control === BREAK || control === STOP) {
       return true;
     }
@@ -64,6 +65,7 @@ var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
     stack[stack.length] = value;
     control = iWalk(value, props, supplier, thisArg, stack);
     aPop.call(stack);
+
     return control === STOP;
   });
 
@@ -81,18 +83,12 @@ var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
  * @param {*} [thisArg] - The `this` binding of `supplier`.
  */
 // eslint-disable-next-line max-params
-var oWalk = function objectWalk(object, props, supplier, thisArg) {
+const oWalk = function objectWalk(object, props, supplier, thisArg) {
   if (isPrimitive(object) || isFunction(supplier) === false) {
     return;
   }
 
-  iWalk(
-    object,
-    isFunction(props) ? props : objectKeys,
-    supplier,
-    thisArg,
-    [object]
-  );
+  iWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
 };
 
 defineProperties(oWalk, {
@@ -102,7 +98,7 @@ defineProperties(oWalk, {
    * @default break
    */
   BREAK: {
-    value: BREAK
+    value: BREAK,
   },
   /**
    * @static
@@ -110,7 +106,7 @@ defineProperties(oWalk, {
    * @default skip
    */
   SKIP: {
-    value: SKIP
+    value: SKIP,
   },
   /**
    * @static
@@ -118,8 +114,8 @@ defineProperties(oWalk, {
    * @default stop
    */
   STOP: {
-    value: STOP
-  }
+    value: STOP,
+  },
 });
 
 /**
