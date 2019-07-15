@@ -51,8 +51,8 @@
   "dependencies": {
     "array-includes-x": "^2.0.0",
     "array-some-x": "^2.5.0",
-    "is-array-like-x": "^1.8.0",
-    "is-function-x": "^4.0.6",
+    "is-array-like-x": "^2.0.1",
+    "is-function-x": "^4.0.8",
     "is-primitive": "^3.0.1",
     "object-define-properties-x": "^4.2.0",
     "object-keys-x": "^2.5.0"
