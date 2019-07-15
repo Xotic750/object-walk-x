@@ -55,7 +55,7 @@
     "is-function-x": "^4.0.8",
     "is-primitive": "^3.0.1",
     "object-define-properties-x": "^4.2.0",
-    "object-keys-x": "^2.5.0"
+    "object-keys-x": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
