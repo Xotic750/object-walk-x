@@ -1,12 +1,3 @@
-/**
- * @file Walks a given object and invokes a function on each iteration.
- * @version 1.7.0
- * @author Xotic750 <Xotic750@gmail.com>
- * @copyright  Xotic750
- * @license {@link <https://opensource.org/licenses/MIT> MIT}
- * @module object-walk-x
- */
-
 import defineProperties from 'object-define-properties-x';
 
 import isFunction from 'is-function-x';
@@ -128,38 +119,5 @@ defineProperties(oWalk, {
  *  properties of `value` to be walked, invoked per iteration.
  * @param {Function} supplier - The function invoked per iteration.
  * @param {*} [thisArg] - The `this` binding of `supplier`.
- * @example
- * var objectWalk = require('object-walk-x');
- *
- * var subject = {
- *   one: {
- *     a: true,
- *     b: true
- *   },
- *   two: {
- *     x: true,
- *     y: true
- *   }
- * };
- *
- * objectWalk(
- *   subject,
- *   Object.keys,
- *   function (value, prop, object, depth) {
- *     object[prop + '_renamed' ] = value;
- *     delete object[prop];
- *   }
- * );
- *
- * // {
- * //  one_renamed: {
- * //    a_renamed: true,
- * //     b_renamed: true
- * //   },
- * //   two_renamed: {
- * //    x_renamed: true,
- * //     y_renamed: true
- * //   }
- * // }
  */
 export default oWalk;
