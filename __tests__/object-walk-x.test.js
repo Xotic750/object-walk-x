@@ -40,7 +40,6 @@ describe('objectWalk', function() {
 
   it('should return `undefined`', function() {
     expect.assertions(1);
-    expect.assertions(1);
     const values = [true, 'abc', 1, null, undefined, function() {}, [], /r/];
     const expected = new Array(values.length).fill();
     const actual = values.map(objectWalk);
@@ -48,7 +47,6 @@ describe('objectWalk', function() {
   });
 
   it('should return `undefined`', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const values = [true, 'abc', 1, null, undefined, function() {}, [], /r/];
     const expected = new Array(values.length).fill();
@@ -66,7 +64,6 @@ describe('objectWalk', function() {
   });
 
   it('should enumerate all own keys', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const subject = [1, 2, 3];
     const values = [1, 2, 3, true];
@@ -96,7 +93,6 @@ describe('objectWalk', function() {
   });
 
   it('should only iterate array indexes', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const subject = [1, 2, 3];
     const values = [1, 2, 3];
@@ -133,7 +129,6 @@ describe('objectWalk', function() {
   });
 
   it('should only deep iterate arrays', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const object1 = [1, true];
     const object2 = [2, false];
@@ -176,7 +171,6 @@ describe('objectWalk', function() {
 
   it('should only deep iterate arrays and report booleans', function() {
     expect.assertions(1);
-    expect.assertions(1);
     const object1 = [1, true];
     const object2 = [2, false];
     const subject = [object1, object2, [3, [4]], {a: true}];
@@ -217,7 +211,6 @@ describe('objectWalk', function() {
 
   it('should detect circular objects', function() {
     expect.assertions(1);
-    expect.assertions(1);
     const object1 = [1, true];
     const object2 = [2, false];
     const object3 = [4];
@@ -229,7 +222,6 @@ describe('objectWalk', function() {
   });
 
   it('should skip `value` when supplier returns `SKIP`', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const object1 = [1, true];
     const object2 = [2, false];
@@ -273,7 +265,6 @@ describe('objectWalk', function() {
   });
 
   it('should exit iteration when supplier returns `BREAK`', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const object1 = [1, true, 'a'];
     const object2 = [2, false, 'b'];
@@ -336,7 +327,6 @@ describe('objectWalk', function() {
   });
 
   it('should stop execution when supplier returns `STOP`', function() {
-    expect.assertions(1);
     expect.assertions(1);
     const object1 = [1, true, 'a'];
     const object2 = [2, false, 'b'];
