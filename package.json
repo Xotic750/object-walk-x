@@ -49,13 +49,13 @@
     "url": "https://github.com/Xotic750/object-walk-x/issues"
   },
   "dependencies": {
-    "array-includes-x": "^3.0.1",
+    "array-includes-x": "^3.0.2",
     "array-some-x": "^2.5.0",
-    "is-array-like-x": "^2.0.2",
-    "is-function-x": "^4.0.9",
+    "is-array-like-x": "^2.0.3",
+    "is-function-x": "^4.0.10",
     "is-primitive": "^3.0.1",
     "object-define-properties-x": "^4.2.0",
-    "object-keys-x": "^3.0.2"
+    "object-keys-x": "^3.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",

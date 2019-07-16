@@ -7,13 +7,14 @@
  * @module object-walk-x
  */
 
-const defineProperties = require('object-define-properties-x');
-const isFunction = require('is-function-x');
-const isPrimitive = require('is-primitive');
-const isArrayLike = require('is-array-like-x');
-const includes = require('array-includes-x');
-const some = require('array-some-x');
-const objectKeys = require('object-keys-x');
+import defineProperties from 'object-define-properties-x';
+
+import isFunction from 'is-function-x';
+import isPrimitive from 'is-primitive';
+import isArrayLike from 'is-array-like-x';
+import includes from 'array-includes-x';
+import some from 'array-some-x';
+import objectKeys from 'object-keys-x';
 
 const aPop = Array.prototype.pop;
 const SKIP = 'skip';
@@ -161,4 +162,4 @@ defineProperties(oWalk, {
  * //   }
  * // }
  */
-module.exports = oWalk;
+export default oWalk;
