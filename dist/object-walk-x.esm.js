@@ -5,12 +5,10 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
-
-const aPop = [].pop;
-const SKIP = 'skip';
-const BREAK = 'break';
-const STOP = 'stop';
-
+var aPop = [].pop;
+var SKIP = 'skip';
+var BREAK = 'break';
+var STOP = 'stop';
 /**
  * This method walks a given object and invokes a function on each
  * iteration.
@@ -23,23 +21,25 @@ const STOP = 'stop';
  * @param {*} thisArg - The `this` binding of `supplier`.
  * @param {!object} stack - The `stack` for tracking circularity.
  */
-const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
+
+var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
   if (isPrimitive(object)) {
     /* eslint-disable-next-line no-void */
     return void 0;
   }
 
-  const {length} = stack;
-  let keys = props(object, length);
+  var length = stack.length;
+  var keys = props(object, length);
 
   if (isArrayLike(keys) === false) {
     keys = [];
   }
-
   /* eslint-disable-next-line no-void */
-  let control = void 0;
+
+
+  var control = void 0;
   some(keys, function _some(prop) {
-    const value = object[prop];
+    var value = object[prop];
     control = supplier.call(thisArg, value, prop, object, length);
 
     if (control === BREAK || control === STOP) {
@@ -57,13 +57,10 @@ const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
     stack[stack.length] = value;
     control = iWalk(value, props, supplier, thisArg, stack);
     aPop.call(stack);
-
     return control === STOP;
   });
-
   return control;
 };
-
 /**
  * This method walks a given object and invokes a function on each iteration.
  *
@@ -73,15 +70,17 @@ const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
  * @param {Function} supplier - The function invoked per iteration.
  * @param {*} [thisArg] - The `this` binding of `supplier`.
  */
-const oWalk = function objectWalk(object, props, supplier, thisArg) {
+
+
+var oWalk = function objectWalk(object, props, supplier, thisArg) {
   if (isPrimitive(object) || isFunction(supplier) === false) {
     return;
   }
 
   iWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
-};
+}; // noinspection JSValidateTypes
 
-// noinspection JSValidateTypes
+
 defineProperties(oWalk, {
   /**
    * @static
@@ -89,24 +88,27 @@ defineProperties(oWalk, {
    * @default break
    */
   BREAK: {
-    value: BREAK,
+    value: BREAK
   },
+
   /**
    * @static
    * @type string
    * @default skip
    */
   SKIP: {
-    value: SKIP,
+    value: SKIP
   },
+
   /**
    * @static
    * @type string
    * @default stop
    */
   STOP: {
-    value: STOP,
-  },
+    value: STOP
+  }
 });
-
 export default oWalk;
+
+//# sourceMappingURL=object-walk-x.esm.js.map
