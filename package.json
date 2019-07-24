@@ -1,6 +1,6 @@
 {
   "name": "object-walk-x",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Walks a given object and invokes a function on each iteration.",
   "homepage": "https://github.com/Xotic750/object-walk-x",
   "author": {
@@ -22,6 +22,7 @@
   ],
   "module": "dist/object-walk-x.esm.js",
   "main": "dist/object-walk-x.js",
+  "jsdelivr": "dist/object-walk-x.min.js",
   "scripts": {
     "build:esm": "mkdirp dist && babel -s true --env-name esm src/object-walk-x.js -o dist/object-walk-x.esm.js",
     "build:base": "webpack --bail --progress --profile --colors",
@@ -49,13 +50,13 @@
     "url": "https://github.com/Xotic750/object-walk-x/issues"
   },
   "dependencies": {
-    "array-includes-x": "^3.0.11",
-    "array-some-x": "^3.0.7",
-    "is-array-like-x": "^2.0.12",
-    "is-function-x": "^4.0.21",
+    "array-includes-x": "^3.0.12",
+    "array-some-x": "^3.0.8",
+    "is-array-like-x": "^2.0.13",
+    "is-function-x": "^4.0.23",
     "is-primitive": "^3.0.1",
-    "object-define-properties-x": "^5.0.8",
-    "object-keys-x": "^3.0.12"
+    "object-define-properties-x": "^5.0.9",
+    "object-keys-x": "^3.0.13"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -93,7 +94,7 @@
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.13.6",
-    "eslint-plugin-jsdoc": "^15.7.1",
+    "eslint-plugin-jsdoc": "^15.7.2",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-lodash": "^5.1.0",
     "eslint-plugin-no-use-extend-native": "^0.4.1",
