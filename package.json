@@ -1,6 +1,6 @@
 {
   "name": "object-walk-x",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Walks a given object and invokes a function on each iteration.",
   "homepage": "https://github.com/Xotic750/object-walk-x",
   "author": {
@@ -50,13 +50,13 @@
     "url": "https://github.com/Xotic750/object-walk-x/issues"
   },
   "dependencies": {
-    "array-includes-x": "^3.0.12",
-    "array-some-x": "^3.0.8",
-    "is-array-like-x": "^2.0.13",
-    "is-function-x": "^4.0.23",
+    "array-includes-x": "^3.0.13",
+    "array-some-x": "^3.0.9",
+    "is-array-like-x": "^2.0.14",
+    "is-function-x": "^4.0.24",
     "is-primitive": "^3.0.1",
-    "object-define-properties-x": "^5.0.9",
-    "object-keys-x": "^3.0.13"
+    "object-define-properties-x": "^5.0.10",
+    "object-keys-x": "^3.0.14"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -70,7 +70,7 @@
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/runtime": "^7.5.5",
-    "@prorenata/eslint-config-vue": "^1.13.11",
+    "@prorenata/eslint-config-vue": "^1.13.12",
     "@types/jest": "^24.0.15",
     "@types/node": "^12.6.8",
     "babel-core": "^7.0.0-0",
