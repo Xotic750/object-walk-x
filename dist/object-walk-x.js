@@ -2,13 +2,13 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2015-2017",
-  "date": "2019-07-25T22:58:07.191Z",
+  "date": "2019-07-26T16:22:33.726Z",
   "describe": "",
   "description": "Walks a given object and invokes a function on each iteration.",
   "file": "object-walk-x.js",
   "hash": "1fc670b31ba790922633",
   "license": "MIT",
-  "version": "2.0.7"
+  "version": "2.0.8"
 }
 */
 (function webpackUniversalModuleDefinition(root, factory) {
