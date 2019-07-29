@@ -1,3 +1,11 @@
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 import defineProperties from 'object-define-properties-x';
 import isFunction from 'is-function-x';
 import isPrimitive from 'is-primitive';
@@ -5,10 +13,13 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
+import slice from 'array-slice-x';
 var aPop = [].pop;
 var SKIP = 'skip';
 var BREAK = 'break';
-var STOP = 'stop';
+var STOP = 'stop'; // eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
+
 /**
  * This method walks a given object and invokes a function on each
  * iteration.
@@ -21,11 +32,20 @@ var STOP = 'stop';
  * @param {*} thisArg - The `this` binding of `supplier`.
  * @param {!object} stack - The `stack` for tracking circularity.
  */
+// eslint-enable jsdoc/check-param-names
 
-var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
+var internalWalk = function internalWalk() {
+  /* eslint-disable-next-line prefer-rest-params */
+  var _slice = slice(arguments),
+      _slice2 = _slicedToArray(_slice, 5),
+      object = _slice2[0],
+      props = _slice2[1],
+      supplier = _slice2[2],
+      thisArg = _slice2[3],
+      stack = _slice2[4];
+
   if (isPrimitive(object)) {
-    /* eslint-disable-next-line no-void */
-    return void 0;
+    return null;
   }
 
   var length = stack.length;
@@ -34,11 +54,9 @@ var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
   if (isArrayLike(keys) === false) {
     keys = [];
   }
-  /* eslint-disable-next-line no-void */
 
-
-  var control = void 0;
-  some(keys, function _some(prop) {
+  var control = null;
+  some(keys, function predicate(prop) {
     var value = object[prop];
     control = supplier.call(thisArg, value, prop, object, length);
 
@@ -55,12 +73,14 @@ var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
     }
 
     stack[stack.length] = value;
-    control = iWalk(value, props, supplier, thisArg, stack);
+    control = internalWalk(value, props, supplier, thisArg, stack);
     aPop.call(stack);
     return control === STOP;
   });
   return control;
-};
+}; // eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
+
 /**
  * This method walks a given object and invokes a function on each iteration.
  *
@@ -70,18 +90,27 @@ var iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
  * @param {Function} supplier - The function invoked per iteration.
  * @param {*} [thisArg] - The `this` binding of `supplier`.
  */
+// eslint-enable jsdoc/check-param-names
 
 
-var oWalk = function objectWalk(object, props, supplier, thisArg) {
+var objectWalk = function objectWalk() {
+  /* eslint-disable-next-line prefer-rest-params */
+  var _slice3 = slice(arguments),
+      _slice4 = _slicedToArray(_slice3, 4),
+      object = _slice4[0],
+      props = _slice4[1],
+      supplier = _slice4[2],
+      thisArg = _slice4[3];
+
   if (isPrimitive(object) || isFunction(supplier) === false) {
     return;
   }
 
-  iWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
+  internalWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
 }; // noinspection JSValidateTypes
 
 
-defineProperties(oWalk, {
+defineProperties(objectWalk, {
   /**
    * @static
    * @type string
@@ -109,6 +138,6 @@ defineProperties(oWalk, {
     value: STOP
   }
 });
-export default oWalk;
+export default objectWalk;
 
 //# sourceMappingURL=object-walk-x.esm.js.map

@@ -5,12 +5,15 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
+import slice from 'array-slice-x';
 
 const aPop = [].pop;
 const SKIP = 'skip';
 const BREAK = 'break';
 const STOP = 'stop';
 
+// eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
 /**
  * This method walks a given object and invokes a function on each
  * iteration.
@@ -23,10 +26,13 @@ const STOP = 'stop';
  * @param {*} thisArg - The `this` binding of `supplier`.
  * @param {!object} stack - The `stack` for tracking circularity.
  */
-const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
+// eslint-enable jsdoc/check-param-names
+const internalWalk = function internalWalk() {
+  /* eslint-disable-next-line prefer-rest-params */
+  const [object, props, supplier, thisArg, stack] = slice(arguments);
+
   if (isPrimitive(object)) {
-    /* eslint-disable-next-line no-void */
-    return void 0;
+    return null;
   }
 
   const {length} = stack;
@@ -36,9 +42,8 @@ const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
     keys = [];
   }
 
-  /* eslint-disable-next-line no-void */
-  let control = void 0;
-  some(keys, function _some(prop) {
+  let control = null;
+  some(keys, function predicate(prop) {
     const value = object[prop];
     control = supplier.call(thisArg, value, prop, object, length);
 
@@ -55,7 +60,7 @@ const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
     }
 
     stack[stack.length] = value;
-    control = iWalk(value, props, supplier, thisArg, stack);
+    control = internalWalk(value, props, supplier, thisArg, stack);
     aPop.call(stack);
 
     return control === STOP;
@@ -64,6 +69,8 @@ const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
   return control;
 };
 
+// eslint-disable jsdoc/check-param-names
+// noinspection JSCommentMatchesSignature
 /**
  * This method walks a given object and invokes a function on each iteration.
  *
@@ -73,16 +80,20 @@ const iWalk = function internalWalk(object, props, supplier, thisArg, stack) {
  * @param {Function} supplier - The function invoked per iteration.
  * @param {*} [thisArg] - The `this` binding of `supplier`.
  */
-const oWalk = function objectWalk(object, props, supplier, thisArg) {
+// eslint-enable jsdoc/check-param-names
+const objectWalk = function objectWalk() {
+  /* eslint-disable-next-line prefer-rest-params */
+  const [object, props, supplier, thisArg] = slice(arguments);
+
   if (isPrimitive(object) || isFunction(supplier) === false) {
     return;
   }
 
-  iWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
+  internalWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
 };
 
 // noinspection JSValidateTypes
-defineProperties(oWalk, {
+defineProperties(objectWalk, {
   /**
    * @static
    * @type string
@@ -109,4 +120,4 @@ defineProperties(oWalk, {
   },
 });
 
-export default oWalk;
+export default objectWalk;

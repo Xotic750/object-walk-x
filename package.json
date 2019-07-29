@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "array-includes-x": "^3.0.16",
+    "array-slice-x": "^4.0.25",
     "array-some-x": "^3.0.12",
     "is-array-like-x": "^2.0.17",
     "is-function-x": "^4.0.27",
