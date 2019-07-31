@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2015-2017",
-  "date": "2019-07-29T20:18:12.540Z",
+  "date": "2019-07-31T00:28:19.049Z",
   "describe": "",
   "description": "Walks a given object and invokes a function on each iteration.",
   "file": "object-walk-x.js",
-  "hash": "b94a6ce8b6b0df185034",
+  "hash": "1a14364c490baf16c37a",
   "license": "MIT",
   "version": "2.0.9"
 }
@@ -221,6 +221,57 @@ module.exports = function isString(value) {
 "use strict";
 
 
+var toStr = Object.prototype.toString;
+
+module.exports = function isArguments(value) {
+	var str = toStr.call(value);
+	var isArgs = str === '[object Arguments]';
+	if (!isArgs) {
+		isArgs = str !== '[object Array]' &&
+			value !== null &&
+			typeof value === 'object' &&
+			typeof value.length === 'number' &&
+			value.length >= 0 &&
+			toStr.call(value.callee) === '[object Function]';
+	}
+	return isArgs;
+};
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getDay = Date.prototype.getDay;
+var tryDateObject = function tryDateObject(value) {
+	try {
+		getDay.call(value);
+		return true;
+	} catch (e) {
+		return false;
+	}
+};
+
+var toStr = Object.prototype.toString;
+var dateClass = '[object Date]';
+var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
+
+module.exports = function isDateObject(value) {
+	if (typeof value !== 'object' || value === null) { return false; }
+	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
 var toStr = Object.prototype.toString;
 
@@ -253,57 +304,6 @@ module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArgum
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toStr = Object.prototype.toString;
-
-module.exports = function isArguments(value) {
-	var str = toStr.call(value);
-	var isArgs = str === '[object Arguments]';
-	if (!isArgs) {
-		isArgs = str !== '[object Array]' &&
-			value !== null &&
-			typeof value === 'object' &&
-			typeof value.length === 'number' &&
-			value.length >= 0 &&
-			toStr.call(value.callee) === '[object Function]';
-	}
-	return isArgs;
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getDay = Date.prototype.getDay;
-var tryDateObject = function tryDateObject(value) {
-	try {
-		getDay.call(value);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-
-var toStr = Object.prototype.toString;
-var dateClass = '[object Date]';
-var hasToStringTag = typeof Symbol === 'function' && typeof Symbol.toStringTag === 'symbol';
-
-module.exports = function isDateObject(value) {
-	if (typeof value !== 'object' || value === null) { return false; }
-	return hasToStringTag ? tryDateObject(value) : toStr.call(value) === dateClass;
-};
-
-
-/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -311,7 +311,7 @@ module.exports = function isDateObject(value) {
 
 
 var slice = Array.prototype.slice;
-var isArgs = __webpack_require__(4);
+var isArgs = __webpack_require__(3);
 
 var origKeys = Object.keys;
 var keysShim = origKeys ? function keys(o) { return origKeys(o); } : __webpack_require__(10);
@@ -450,7 +450,7 @@ if (!Object.keys) {
 	// modified from https://github.com/es-shims/es5-shim
 	var has = Object.prototype.hasOwnProperty;
 	var toStr = Object.prototype.toString;
-	var isArgs = __webpack_require__(4); // eslint-disable-line global-require
+	var isArgs = __webpack_require__(3); // eslint-disable-line global-require
 	var isEnumerable = Object.prototype.propertyIsEnumerable;
 	var hasDontEnumBug = !isEnumerable.call({ toString: null }, 'toString');
 	var hasProtoEnumBug = isEnumerable.call(function () {}, 'prototype');
@@ -681,7 +681,7 @@ var is_primitive = __webpack_require__(0);
 var is_primitive_default = /*#__PURE__*/__webpack_require__.n(is_primitive);
 
 // EXTERNAL MODULE: ./node_modules/is-date-object/index.js
-var is_date_object = __webpack_require__(5);
+var is_date_object = __webpack_require__(4);
 var is_date_object_default = /*#__PURE__*/__webpack_require__.n(is_date_object);
 
 // CONCATENATED MODULE: ./node_modules/to-boolean-x/dist/to-boolean-x.esm.js
@@ -2268,7 +2268,7 @@ var isArrayFn = function iife() {
 
 
 // EXTERNAL MODULE: ./node_modules/is-arguments/index.js
-var is_arguments = __webpack_require__(3);
+var is_arguments = __webpack_require__(5);
 var is_arguments_default = /*#__PURE__*/__webpack_require__.n(is_arguments);
 
 // CONCATENATED MODULE: ./node_modules/array-like-slice-x/dist/array-like-slice-x.esm.js
@@ -3934,60 +3934,6 @@ var $some = array_some_x_esm_isWorking ? array_some_x_esm_patchedSome() : array_
 /* harmony default export */ var array_some_x_esm = ($some);
 
 
-// CONCATENATED MODULE: ./node_modules/array-slice-x/dist/array-slice-x.esm.js
-
-
-
-
-
-
-var nativeSlice = [].slice;
-var resultArray = nativeSlice ? attempt_x_esm.call([1, 2, 3], nativeSlice, 1, 2) : null;
-var failArray = resultArray ? resultArray.threw || is_array_x_esm(resultArray.value) === false || resultArray.value.length !== 1 || resultArray.value[0] !== 2 : false;
-var resultString = nativeSlice ? attempt_x_esm.call('abc', nativeSlice, 1, 2) : null;
-var failString = resultString ? resultString.threw || is_array_x_esm(resultString.value) === false || resultString.value.length !== 1 || resultString.value[0] !== 'b' : false;
-var array_slice_x_esm_doc = typeof document !== 'undefined' && document;
-var resultDocElement = nativeSlice && array_slice_x_esm_doc ? attempt_x_esm.call(array_slice_x_esm_doc.documentElement, nativeSlice).threw : null;
-var failDOM = resultDocElement ? resultDocElement.threw : false;
-/**
- * The slice() method returns a shallow copy of a portion of an array into a new
- * array object selected from begin to end (end not included). The original
- * array will not be modified.
- *
- * @param {Array|object} array - The array to slice.
- * @param {number} [start] - Zero-based index at which to begin extraction.
- *  A negative index can be used, indicating an offset from the end of the
- *  sequence. Running slice(-2) extracts the last two elements in the sequence.
- *  If begin is undefined, slice begins from index 0.
- * @param {number} [end] - Zero-based index before which to end extraction.
- *  Slice extracts up to but not including end. For example, slice(1,4)
- *  extracts the second element through the fourth element (elements indexed
- *  1, 2, and 3).
- *  A negative index can be used, indicating an offset from the end of the
- *  sequence. Running slice(2,-1) extracts the third element through the second-to-last
- *  element in the sequence.
- *  If end is omitted, slice extracts through the end of the
- *  sequence (arr.length).
- *  If end is greater than the length of the sequence, slice extracts through
- *  the end of the sequence (arr.length).
- * @returns {Array} A new array containing the extracted elements.
- */
-
-var array_slice_x_esm_slice = function slice(array, start, end) {
-  var object = to_object_x_esm(array);
-
-  if (failArray || failDOM && is_array_x_esm(object) === false || failString && is_string_default()(object) || is_arguments_default()(object)) {
-    return array_like_slice_x_esm(object, start, end);
-  }
-  /* eslint-disable-next-line prefer-rest-params */
-
-
-  return nativeSlice.apply(object, array_like_slice_x_esm(arguments, 1));
-};
-
-/* harmony default export */ var array_slice_x_esm = (array_slice_x_esm_slice);
-
-
 // CONCATENATED MODULE: ./dist/object-walk-x.esm.js
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -3996,7 +3942,6 @@ function _nonIterableRest() { throw new TypeError("Invalid attempt to destructur
 function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -4025,15 +3970,13 @@ var STOP = 'stop'; // eslint-disable jsdoc/check-param-names
  */
 // eslint-enable jsdoc/check-param-names
 
-var object_walk_x_esm_internalWalk = function internalWalk() {
-  /* eslint-disable-next-line prefer-rest-params */
-  var _slice = array_slice_x_esm(arguments),
-      _slice2 = _slicedToArray(_slice, 5),
-      object = _slice2[0],
-      props = _slice2[1],
-      supplier = _slice2[2],
-      thisArg = _slice2[3],
-      stack = _slice2[4];
+var object_walk_x_esm_internalWalk = function internalWalk(args) {
+  var _args = _slicedToArray(args, 5),
+      object = _args[0],
+      props = _args[1],
+      supplier = _args[2],
+      thisArg = _args[3],
+      stack = _args[4];
 
   if (is_primitive_default()(object)) {
     return null;
@@ -4064,7 +4007,7 @@ var object_walk_x_esm_internalWalk = function internalWalk() {
     }
 
     stack[stack.length] = value;
-    control = internalWalk(value, props, supplier, thisArg, stack);
+    control = internalWalk([value, props, supplier, thisArg, stack]);
     aPop.call(stack);
     return control === STOP;
   });
@@ -4084,20 +4027,14 @@ var object_walk_x_esm_internalWalk = function internalWalk() {
 // eslint-enable jsdoc/check-param-names
 
 
-var object_walk_x_esm_objectWalk = function objectWalk() {
-  /* eslint-disable-next-line prefer-rest-params */
-  var _slice3 = array_slice_x_esm(arguments),
-      _slice4 = _slicedToArray(_slice3, 4),
-      object = _slice4[0],
-      props = _slice4[1],
-      supplier = _slice4[2],
-      thisArg = _slice4[3];
-
+var object_walk_x_esm_objectWalk = function objectWalk(object, props, supplier) {
   if (is_primitive_default()(object) || is_function_x_esm(supplier) === false) {
     return;
   }
+  /* eslint-disable-next-line prefer-rest-params */
 
-  object_walk_x_esm_internalWalk(object, is_function_x_esm(props) ? props : object_keys_x_esm, supplier, thisArg, [object]);
+
+  object_walk_x_esm_internalWalk([object, is_function_x_esm(props) ? props : object_keys_x_esm, supplier, arguments[4], [object]]);
 }; // noinspection JSValidateTypes
 
 

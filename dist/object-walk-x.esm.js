@@ -13,7 +13,6 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
-import slice from 'array-slice-x';
 var aPop = [].pop;
 var SKIP = 'skip';
 var BREAK = 'break';
@@ -34,15 +33,13 @@ var STOP = 'stop'; // eslint-disable jsdoc/check-param-names
  */
 // eslint-enable jsdoc/check-param-names
 
-var internalWalk = function internalWalk() {
-  /* eslint-disable-next-line prefer-rest-params */
-  var _slice = slice(arguments),
-      _slice2 = _slicedToArray(_slice, 5),
-      object = _slice2[0],
-      props = _slice2[1],
-      supplier = _slice2[2],
-      thisArg = _slice2[3],
-      stack = _slice2[4];
+var internalWalk = function internalWalk(args) {
+  var _args = _slicedToArray(args, 5),
+      object = _args[0],
+      props = _args[1],
+      supplier = _args[2],
+      thisArg = _args[3],
+      stack = _args[4];
 
   if (isPrimitive(object)) {
     return null;
@@ -73,7 +70,7 @@ var internalWalk = function internalWalk() {
     }
 
     stack[stack.length] = value;
-    control = internalWalk(value, props, supplier, thisArg, stack);
+    control = internalWalk([value, props, supplier, thisArg, stack]);
     aPop.call(stack);
     return control === STOP;
   });
@@ -93,20 +90,14 @@ var internalWalk = function internalWalk() {
 // eslint-enable jsdoc/check-param-names
 
 
-var objectWalk = function objectWalk() {
-  /* eslint-disable-next-line prefer-rest-params */
-  var _slice3 = slice(arguments),
-      _slice4 = _slicedToArray(_slice3, 4),
-      object = _slice4[0],
-      props = _slice4[1],
-      supplier = _slice4[2],
-      thisArg = _slice4[3];
-
+var objectWalk = function objectWalk(object, props, supplier) {
   if (isPrimitive(object) || isFunction(supplier) === false) {
     return;
   }
+  /* eslint-disable-next-line prefer-rest-params */
 
-  internalWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
+
+  internalWalk([object, isFunction(props) ? props : objectKeys, supplier, arguments[4], [object]]);
 }; // noinspection JSValidateTypes
 
 

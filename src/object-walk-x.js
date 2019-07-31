@@ -5,7 +5,6 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
-import slice from 'array-slice-x';
 
 const aPop = [].pop;
 const SKIP = 'skip';
@@ -27,9 +26,8 @@ const STOP = 'stop';
  * @param {!object} stack - The `stack` for tracking circularity.
  */
 // eslint-enable jsdoc/check-param-names
-const internalWalk = function internalWalk() {
-  /* eslint-disable-next-line prefer-rest-params */
-  const [object, props, supplier, thisArg, stack] = slice(arguments);
+const internalWalk = function internalWalk(args) {
+  const [object, props, supplier, thisArg, stack] = args;
 
   if (isPrimitive(object)) {
     return null;
@@ -60,7 +58,7 @@ const internalWalk = function internalWalk() {
     }
 
     stack[stack.length] = value;
-    control = internalWalk(value, props, supplier, thisArg, stack);
+    control = internalWalk([value, props, supplier, thisArg, stack]);
     aPop.call(stack);
 
     return control === STOP;
@@ -81,15 +79,13 @@ const internalWalk = function internalWalk() {
  * @param {*} [thisArg] - The `this` binding of `supplier`.
  */
 // eslint-enable jsdoc/check-param-names
-const objectWalk = function objectWalk() {
-  /* eslint-disable-next-line prefer-rest-params */
-  const [object, props, supplier, thisArg] = slice(arguments);
-
+const objectWalk = function objectWalk(object, props, supplier) {
   if (isPrimitive(object) || isFunction(supplier) === false) {
     return;
   }
 
-  internalWalk(object, isFunction(props) ? props : objectKeys, supplier, thisArg, [object]);
+  /* eslint-disable-next-line prefer-rest-params */
+  internalWalk([object, isFunction(props) ? props : objectKeys, supplier, arguments[4], [object]]);
 };
 
 // noinspection JSValidateTypes
