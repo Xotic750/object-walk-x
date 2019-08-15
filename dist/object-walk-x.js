@@ -2,11 +2,11 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2015-2017",
-  "date": "2019-08-14T17:26:27.817Z",
+  "date": "2019-08-15T20:55:06.878Z",
   "describe": "",
   "description": "Walks a given object and invokes a function on each iteration.",
   "file": "object-walk-x.js",
-  "hash": "c7f0bdd006f163451046",
+  "hash": "fc0e0468671023349213",
   "license": "MIT",
   "version": "2.1.0"
 }
@@ -3312,6 +3312,22 @@ var object_define_properties_x_esm_defineProperties = function defineProperties(
 /* harmony default export */ var object_define_properties_x_esm = (object_define_properties_x_esm_defineProperties);
 
 
+// CONCATENATED MODULE: ./node_modules/is-primitive-x/dist/is-primitive-x.esm.js
+function is_primitive_x_esm_typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { is_primitive_x_esm_typeof = function _typeof(obj) { return typeof obj; }; } else { is_primitive_x_esm_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return is_primitive_x_esm_typeof(obj); }
+
+/**
+ * Returns true if the value is a primitive.
+ *
+ * @param {*} [val] - The value to test.
+ * @returns {boolean} True if a primitive, otherwise false..
+ */
+var isPrimitive = function isPrimitive(val) {
+  return is_primitive_x_esm_typeof(val) === 'object' ? val === null : typeof val !== 'function';
+};
+
+/* harmony default export */ var is_primitive_x_esm = (isPrimitive);
+
+
 // CONCATENATED MODULE: ./node_modules/is-integer-x/dist/is-integer-x.esm.js
 
 
@@ -4188,7 +4204,7 @@ var object_walk_x_esm_internalWalk = function internalWalk(args) {
       thisArg = _args[3],
       stack = _args[4];
 
-  if (is_primitive_default()(object)) {
+  if (is_primitive_x_esm(object)) {
     return null;
   }
 
@@ -4238,7 +4254,7 @@ var object_walk_x_esm_internalWalk = function internalWalk(args) {
 
 
 var object_walk_x_esm_objectWalk = function objectWalk(object, props, supplier) {
-  if (is_primitive_default()(object) || is_function_x_esm(supplier) === false) {
+  if (is_primitive_x_esm(object) || is_function_x_esm(supplier) === false) {
     return;
   }
   /* eslint-disable-next-line prefer-rest-params */

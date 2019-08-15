@@ -1,6 +1,6 @@
 import defineProperties from 'object-define-properties-x';
 import isFunction from 'is-function-x';
-import isPrimitive from 'is-primitive';
+import isPrimitive from 'is-primitive-x';
 import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
