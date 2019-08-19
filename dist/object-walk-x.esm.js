@@ -13,7 +13,9 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
-var aPop = [].pop;
+import methodize from 'simple-methodize-x';
+import call from 'simple-call-x';
+var aPop = methodize([].pop);
 var SKIP = 'skip';
 var BREAK = 'break';
 var STOP = 'stop'; // eslint-disable jsdoc/check-param-names
@@ -55,7 +57,7 @@ var internalWalk = function internalWalk(args) {
   var control = null;
   some(keys, function predicate(prop) {
     var value = object[prop];
-    control = supplier.call(thisArg, value, prop, object, length);
+    control = call(supplier, thisArg, [value, prop, object, length]);
 
     if (control === BREAK || control === STOP) {
       return true;
@@ -71,7 +73,7 @@ var internalWalk = function internalWalk(args) {
 
     stack[stack.length] = value;
     control = internalWalk([value, props, supplier, thisArg, stack]);
-    aPop.call(stack);
+    aPop(stack);
     return control === STOP;
   });
   return control;

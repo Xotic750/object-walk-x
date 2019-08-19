@@ -5,8 +5,10 @@ import isArrayLike from 'is-array-like-x';
 import includes from 'array-includes-x';
 import some from 'array-some-x';
 import objectKeys from 'object-keys-x';
+import methodize from 'simple-methodize-x';
+import call from 'simple-call-x';
 
-const aPop = [].pop;
+const aPop = methodize([].pop);
 const SKIP = 'skip';
 const BREAK = 'break';
 const STOP = 'stop';
@@ -43,7 +45,7 @@ const internalWalk = function internalWalk(args) {
   let control = null;
   some(keys, function predicate(prop) {
     const value = object[prop];
-    control = supplier.call(thisArg, value, prop, object, length);
+    control = call(supplier, thisArg, [value, prop, object, length]);
 
     if (control === BREAK || control === STOP) {
       return true;
@@ -59,7 +61,7 @@ const internalWalk = function internalWalk(args) {
 
     stack[stack.length] = value;
     control = internalWalk([value, props, supplier, thisArg, stack]);
-    aPop.call(stack);
+    aPop(stack);
 
     return control === STOP;
   });
