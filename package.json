@@ -1,6 +1,6 @@
 {
   "name": "object-walk-x",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Walks a given object and invokes a function on each iteration.",
   "homepage": "https://github.com/Xotic750/object-walk-x",
   "author": {
@@ -51,15 +51,15 @@
     "url": "https://github.com/Xotic750/object-walk-x/issues"
   },
   "dependencies": {
-    "array-includes-x": "^3.1.1",
-    "array-some-x": "^3.1.1",
-    "is-array-like-x": "^2.1.1",
-    "is-function-x": "^4.1.1",
-    "is-primitive-x": "^1.0.0",
-    "object-define-properties-x": "^5.1.1",
-    "object-keys-x": "^3.1.1",
-    "simple-call-x": "^1.0.2",
-    "simple-methodize-x": "^1.0.3"
+    "array-includes-x": "^3.1.2",
+    "array-some-x": "^3.1.2",
+    "is-array-like-x": "^2.1.2",
+    "is-function-x": "^4.1.2",
+    "is-primitive-x": "^1.0.1",
+    "object-define-properties-x": "^5.1.2",
+    "object-keys-x": "^3.1.2",
+    "simple-call-x": "^1.0.3",
+    "simple-methodize-x": "^1.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
