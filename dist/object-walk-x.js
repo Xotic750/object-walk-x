@@ -2,7 +2,7 @@
 {
   "author": "Graham Fairweather",
   "copywrite": "Copyright (c) 2015-2017",
-  "date": "2019-08-27T21:25:43.212Z",
+  "date": "2019-08-28T16:08:53.328Z",
   "describe": "",
   "description": "Walks a given object and invokes a function on each iteration.",
   "file": "object-walk-x.js",
