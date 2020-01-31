@@ -22,9 +22,10 @@ const STOP = 'stop';
  * @private
  * @param {*} object - The `object` to walk.
  * @param {Function} props - The function that returns an array of the
- *  properties of `value` to be walked, invoked per iteration.
+ * properties of `value` to be walked, invoked per iteration.
  * @param {Function} supplier - The function invoked per `depth`.
  * @param {*} thisArg - The `this` binding of `supplier`.
+ * @param args
  * @param {!object} stack - The `stack` for tracking circularity.
  */
 // eslint-enable jsdoc/check-param-names
